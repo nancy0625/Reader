@@ -1,4 +1,4 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.Movie.Presenter;
 
 /**
  * Created by apple on 18/5/22.

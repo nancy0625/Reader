@@ -1,4 +1,4 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.Bean;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.Movie;
 
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
@@ -11,10 +11,13 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 
-import java.util.TimerTask;
+import cn.edu.gdmec.android.reader.Bean.MoviesBean;
+import cn.edu.gdmec.android.reader.Movie.Presenter.MoviesPresenter;
+import cn.edu.gdmec.android.reader.Movie.View.IMovieView;
+import cn.edu.gdmec.android.reader.R;
 
 
-public class FgMovieFragment extends Fragment  implements IMovieView{
+public class FgMovieFragment extends Fragment  implements IMovieView {
    private TextView tv_movies;
     private SwipeRefreshLayout srl_movies;
     private MoviesPresenter presenter;

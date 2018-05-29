@@ -1,5 +1,7 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.Http;
 
+import cn.edu.gdmec.android.reader.Bean.MoviesBean;
+import cn.edu.gdmec.android.reader.Bean.NewsBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

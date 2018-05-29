@@ -1,4 +1,13 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.Movie.Presenter;
+
+import cn.edu.gdmec.android.reader.Api;
+import cn.edu.gdmec.android.reader.Bean.MoviesBean;
+import cn.edu.gdmec.android.reader.Bean.NewsBean;
+import cn.edu.gdmec.android.reader.IOnLoadListener;
+import cn.edu.gdmec.android.reader.Movie.Model.IMovieModel;
+import cn.edu.gdmec.android.reader.Movie.Model.MovieModel;
+import cn.edu.gdmec.android.reader.Movie.Presenter.IMoviePresenter;
+import cn.edu.gdmec.android.reader.Movie.View.IMovieView;
 
 /**
  * Created by apple on 18/5/22.
@@ -17,7 +26,7 @@ public class MoviesPresenter implements IMoviePresenter,IOnLoadListener {
     @Override
     public void loadMovies() {
         iMovieView.showDialog();
-        iMovieModel.loadMovies("headline",Api.MOVIE_ID,this);
+        iMovieModel.loadMovies("headline", Api.MOVIE_ID,this);
     }
 
     @Override

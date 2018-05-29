@@ -1,7 +1,9 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.Http;
 
 import java.util.concurrent.TimeUnit;
 
+import cn.edu.gdmec.android.reader.Bean.MoviesBean;
+import cn.edu.gdmec.android.reader.Bean.NewsBean;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -18,7 +20,7 @@ public class RetrofitHelper {
        Retrofit retrofit = new Retrofit.Builder().baseUrl(host).client(getOkHttpClient()).addConverterFactory(GsonConverterFactory.create()).build();
        retrofitService = retrofit.create(RetrofitService.class);
     }
-    public Call<NewsBean> getNews(String type,String id,int startPage){
+    public Call<NewsBean> getNews(String type, String id, int startPage){
        return retrofitService.getNews(type,id,startPage);
     }
     public Call<MoviesBean> getMovies(String type){

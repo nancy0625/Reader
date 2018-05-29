@@ -1,4 +1,4 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.News;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,9 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.edu.gdmec.android.reader.MyFragmentAdapter;
+import cn.edu.gdmec.android.reader.R;
 
 
 public class FgNewsFragment extends Fragment  {

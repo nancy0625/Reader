@@ -1,5 +1,10 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.Movie.Model;
 
+import cn.edu.gdmec.android.reader.Api;
+import cn.edu.gdmec.android.reader.Bean.MoviesBean;
+import cn.edu.gdmec.android.reader.Http.RetrofitHelper;
+import cn.edu.gdmec.android.reader.IOnLoadListener;
+import cn.edu.gdmec.android.reader.Movie.Model.IMovieModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

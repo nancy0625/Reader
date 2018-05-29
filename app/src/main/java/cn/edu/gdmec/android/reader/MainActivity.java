@@ -9,10 +9,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+
+import cn.edu.gdmec.android.reader.Movie.FgMovieFragment;
+import cn.edu.gdmec.android.reader.News.FgNewsFragment;
+import cn.edu.gdmec.android.reader.Video.FgVideoFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 

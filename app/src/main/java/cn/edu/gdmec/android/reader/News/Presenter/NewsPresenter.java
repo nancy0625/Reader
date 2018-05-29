@@ -1,4 +1,14 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.News.Presenter;
+
+import cn.edu.gdmec.android.reader.Api;
+import cn.edu.gdmec.android.reader.Bean.MoviesBean;
+import cn.edu.gdmec.android.reader.Bean.NewsBean;
+import cn.edu.gdmec.android.reader.IOnLoadListener;
+import cn.edu.gdmec.android.reader.News.FgNewsFragment;
+import cn.edu.gdmec.android.reader.News.Model.INewsModel;
+import cn.edu.gdmec.android.reader.News.Model.NewsModel;
+import cn.edu.gdmec.android.reader.News.Presenter.INewsPresenter;
+import cn.edu.gdmec.android.reader.News.View.INewsView;
 
 /**
  * Created by apple on 18/5/22.
@@ -17,7 +27,7 @@ public class NewsPresenter implements INewsPresenter,IOnLoadListener {
       iNewsView.showDialog();
       switch (type){
           case FgNewsFragment.NEWS_TYPE_TOP:
-              iNewsModel.loadNews("headline",startPage,Api.HEADLINE_ID,this);
+              iNewsModel.loadNews("headline",startPage, Api.HEADLINE_ID,this);
               break;
           case FgNewsFragment.NEWS_TYPE_NBA:
               iNewsModel.loadNews("list",startPage,Api.NBA_ID,this);

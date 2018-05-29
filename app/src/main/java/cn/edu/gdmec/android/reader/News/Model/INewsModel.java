@@ -1,4 +1,6 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.News.Model;
+
+import cn.edu.gdmec.android.reader.IOnLoadListener;
 
 /**
  * Created by apple on 18/5/22.

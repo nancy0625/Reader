@@ -1,5 +1,10 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.News.Model;
 
+import cn.edu.gdmec.android.reader.Api;
+import cn.edu.gdmec.android.reader.Bean.NewsBean;
+import cn.edu.gdmec.android.reader.Http.RetrofitHelper;
+import cn.edu.gdmec.android.reader.IOnLoadListener;
+import cn.edu.gdmec.android.reader.News.Model.INewsModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

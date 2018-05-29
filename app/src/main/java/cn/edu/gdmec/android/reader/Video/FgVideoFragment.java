@@ -1,10 +1,12 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.Video;
 
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
+
+import cn.edu.gdmec.android.reader.R;
 
 
 public class FgVideoFragment extends Fragment  {

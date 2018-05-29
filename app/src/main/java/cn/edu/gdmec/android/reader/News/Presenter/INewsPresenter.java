@@ -1,4 +1,4 @@
-package cn.edu.gdmec.android.reader;
+package cn.edu.gdmec.android.reader.News.Presenter;
 
 /**
  * Created by apple on 18/5/22.
