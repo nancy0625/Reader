@@ -6,7 +6,6 @@ import cn.edu.gdmec.android.reader.Bean.NewsBean;
 import cn.edu.gdmec.android.reader.IOnLoadListener;
 import cn.edu.gdmec.android.reader.Movie.Model.IMovieModel;
 import cn.edu.gdmec.android.reader.Movie.Model.MovieModel;
-import cn.edu.gdmec.android.reader.Movie.Presenter.IMoviePresenter;
 import cn.edu.gdmec.android.reader.Movie.View.IMovieView;
 
 /**
@@ -14,20 +13,23 @@ import cn.edu.gdmec.android.reader.Movie.View.IMovieView;
  */
 
 public class MoviesPresenter implements IMoviePresenter,IOnLoadListener {
-    private IMovieModel iMovieModel;
+    private IMovieModel iMovieModel,iMovieModel2;
     private IMovieView iMovieView;
-
     public MoviesPresenter(IMovieView iMovieView){
         this.iMovieView = iMovieView;
         this.iMovieModel = new MovieModel();
+        this.iMovieModel2 = new MovieModel();
     }
 
 
     @Override
-    public void loadMovies() {
+    public void loadMovies(String type) {
         iMovieView.showDialog();
-        iMovieModel.loadMovies("headline", Api.MOVIE_ID,this);
+        iMovieModel.loadMovies("headline",type,this);
+
+
     }
+
 
     @Override
     public void success(NewsBean newsBean) {
@@ -42,10 +44,13 @@ public class MoviesPresenter implements IMoviePresenter,IOnLoadListener {
         if (moviesBean != null){
             iMovieView.showViews(moviesBean);
         }
+
     }
 
+
+
     @Override
-    public void fail(String throwable) {
+    public void fail(Throwable throwable) {
 
         iMovieView.hideDialog();
         iMovieView.showErrorMsg(throwable);

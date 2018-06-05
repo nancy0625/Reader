@@ -14,5 +14,6 @@ public class Api {
     public static final String JOKE_ID = "T1350383429665";
     public static final String MOVIES_HOST = "https://api.douban.com/";
     public static final String MOVIE_ID = "in_theaters";
+    public static final String MOVIE_TOP = "top250";
 
 }

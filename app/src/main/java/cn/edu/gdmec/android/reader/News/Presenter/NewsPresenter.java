@@ -7,7 +7,6 @@ import cn.edu.gdmec.android.reader.IOnLoadListener;
 import cn.edu.gdmec.android.reader.News.FgNewsFragment;
 import cn.edu.gdmec.android.reader.News.Model.INewsModel;
 import cn.edu.gdmec.android.reader.News.Model.NewsModel;
-import cn.edu.gdmec.android.reader.News.Presenter.INewsPresenter;
 import cn.edu.gdmec.android.reader.News.View.INewsView;
 
 /**
@@ -53,8 +52,10 @@ public class NewsPresenter implements INewsPresenter,IOnLoadListener {
     }
 
     @Override
-    public void fail(String throwable) {
+    public void fail(Throwable throwable) {
         iNewsView.hideDialog();
         iNewsView.showErrorMsg(throwable);
     }
+
+
 }

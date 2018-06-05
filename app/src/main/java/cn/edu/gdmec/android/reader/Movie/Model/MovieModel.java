@@ -8,6 +8,9 @@ import cn.edu.gdmec.android.reader.Movie.Model.IMovieModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by apple on 18/5/22.
@@ -17,21 +20,27 @@ public class MovieModel implements IMovieModel {
     @Override
     public void loadMovies(final String hostType,final String type, final IOnLoadListener iOnLoadListener) {
         RetrofitHelper retrofitHelper = new RetrofitHelper(Api.MOVIES_HOST);
-        retrofitHelper.getMovies(type).enqueue(new Callback<MoviesBean>() {
-            @Override
-            public void onResponse(Call<MoviesBean> call, Response<MoviesBean> response) {
-                if (response.isSuccessful()){
-                    iOnLoadListener.successMov(response.body());
-                }else {
-                    iOnLoadListener.fail("");
-                }
-            }
+        retrofitHelper.getMovies(type).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<MoviesBean>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Call<MoviesBean> call, Throwable t) {
+                    }
 
-                iOnLoadListener.fail(t.toString());
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+
+                        iOnLoadListener.fail(e);
+                    }
+
+                    @Override
+                    public void onNext(MoviesBean moviesBean) {
+
+                        iOnLoadListener.successMov(moviesBean);
+                    }
+                });
     }
+
+
 }
