@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,10 +29,12 @@ public class ItemMovieTopAdapter extends RecyclerView.Adapter<ItemMovieTopAdapte
     private List<MoviesBean.SubjectsBean> objects = new ArrayList<MoviesBean.SubjectsBean>();
 
     private Context context;
+    private LayoutInflater layoutInflater;
 
     public ItemMovieTopAdapter(Context context) {
 
         this.context = context;
+        this.layoutInflater = LayoutInflater.from(context);
     }
     public void setData(List<MoviesBean.SubjectsBean> objects){
         this.objects = objects;
@@ -40,7 +43,7 @@ public class ItemMovieTopAdapter extends RecyclerView.Adapter<ItemMovieTopAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_movie_top, parent, false);
-        return new ViewHolder(view);
+        return new ItemMovieTopAdapter.ViewHolder(view);
     }
 
     @Override
@@ -53,6 +56,15 @@ public class ItemMovieTopAdapter extends RecyclerView.Adapter<ItemMovieTopAdapte
                 .load(bean.getImages().getSmall())
                 .into(holder.ivMovieTop);
         holder.tvMovieTopTitle.setText(bean.getTitle());
+        holder.rlMovieOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,ADetailActivity.class);
+                intent.putExtra("url",bean.getAlt());
+                intent.putExtra("titile",bean.getTitle());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -67,12 +79,14 @@ public class ItemMovieTopAdapter extends RecyclerView.Adapter<ItemMovieTopAdapte
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
+        private LinearLayout rlMovieOn;
         private ImageView ivMovieTop;
         private TextView tvMovieTopTitle;
 
 
         public ViewHolder(View view) {
             super(view);
+            rlMovieOn = (LinearLayout)view.findViewById(R.id.rl_movie_top);
             ivMovieTop = (ImageView) view.findViewById(R.id.iv_movie_top);
             tvMovieTopTitle = (TextView) view.findViewById(R.id.tv_movie_top_title);
 
