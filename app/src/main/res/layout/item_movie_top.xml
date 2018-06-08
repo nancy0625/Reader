@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_margin="10dp"
     android:id="@+id/rl_movie_top">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="145dp"
-            android:layout_marginRight="12dp"
-            android:layout_alignParentLeft="true"
+           android:layout_gravity="center"
             android:id="@+id/iv_movie_top"/>
 
         <TextView
             android:id="@+id/tv_movie_top_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dddddd" />
+            android:textColor="@color/text_common"
+            android:textSize="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center" />
 
 </LinearLayout>
 

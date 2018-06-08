@@ -41,24 +41,16 @@ public class FgMovieFragment extends Fragment implements IMovieView {
         super.onViewCreated(view, savedInstanceState);
         moviesPresenter = new MoviesPresenter(this);
         srl_movie = view.findViewById(R.id.srl_movie);
-        srl_top = view.findViewById(R.id.srl_top);
+
         rv_movie_on = view.findViewById(R.id.rv_movie_on);
         rv_movie_top = view.findViewById(R.id.rv_movie_top);
         movieOnAdapter = new ItemMovieOnAdapter(getActivity());
         movieTopAdapter = new ItemMovieTopAdapter(getActivity());
         srl_movie.setColorSchemeColors(Color.parseColor("#ffce3d3a"));
-        srl_top.setColorSchemeColors(Color.parseColor("#ffce3d3a"));
 
         moviesPresenter.loadMovies(Api.MOVIE_TOP);
         moviesPresenter.loadMovies(Api.MOVIE_ID);
 
-        srl_top.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                moviesPresenter.loadMovies(Api.MOVIE_TOP);
-
-            }
-        });
         srl_movie.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
