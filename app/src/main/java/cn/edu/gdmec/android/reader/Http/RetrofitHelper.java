@@ -4,8 +4,10 @@ import java.util.concurrent.TimeUnit;
 
 import cn.edu.gdmec.android.reader.Bean.MoviesBean;
 import cn.edu.gdmec.android.reader.Bean.NewsBean;
+import cn.edu.gdmec.android.reader.Bean.TodayBean;
+import cn.edu.gdmec.android.reader.Bean.TodayContentBean;
+import cn.edu.gdmec.android.reader.Bean.VideoUrlBean;
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,10 +32,20 @@ public class RetrofitHelper {
     public Observable<MoviesBean> getMovies(String type){
         return retrofitService.getMovies(type);
     }
+
+
     public OkHttpClient getOkHttpClient(){
        if (okHttpClient == null){
            okHttpClient = new OkHttpClient.Builder().retryOnConnectionFailure(true).connectTimeout(30, TimeUnit.SECONDS).build();
        }
        return okHttpClient;
+    }
+
+    public Observable<TodayBean> getToday(String category){
+        return retrofitService.getToday(category);
+    }
+
+    public Observable<VideoUrlBean> getVideoUrl(String api){
+        return retrofitService.getVideoUrl(api);
     }
 }
