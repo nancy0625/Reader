@@ -5,6 +5,7 @@ import cn.edu.gdmec.android.reader.Bean.NewsBean;
 import cn.edu.gdmec.android.reader.Bean.TodayBean;
 import cn.edu.gdmec.android.reader.Bean.TodayContentBean;
 import cn.edu.gdmec.android.reader.Bean.VideoUrlBean;
+import cn.edu.gdmec.android.reader.City;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -28,4 +29,7 @@ public interface RetrofitService {
 
     @GET
     Observable<VideoUrlBean> getVideoUrl(@Url String url);
+//http://wthrcdn.etouch.cn/weather_mini?citykey=101010100
+    @GET("weather_mini")
+    Observable<City> getCity(@Query("citykey") Integer city);
 }
