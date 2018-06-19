@@ -1,5 +1,7 @@
 package cn.edu.gdmec.android.reader.Movie.Model;
 
+import android.widget.Toast;
+
 import cn.edu.gdmec.android.reader.Api;
 import cn.edu.gdmec.android.reader.Bean.MoviesBean;
 import cn.edu.gdmec.android.reader.Http.RetrofitHelper;
@@ -18,9 +20,9 @@ import rx.schedulers.Schedulers;
 
 public class MovieModel implements IMovieModel {
     @Override
-    public void loadMovies(final String hostType,final String type, final IOnLoadListener iOnLoadListener) {
+    public void loadMovies(final String hostType, final String type, final int start, final IOnLoadListener iOnLoadListener) {
         RetrofitHelper retrofitHelper = new RetrofitHelper(Api.MOVIES_HOST);
-        retrofitHelper.getMovies(type).observeOn(AndroidSchedulers.mainThread())
+        retrofitHelper.getMovies(type,start).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<MoviesBean>() {
                     @Override
@@ -31,13 +33,23 @@ public class MovieModel implements IMovieModel {
                     @Override
                     public void onError(Throwable e) {
 
-                        iOnLoadListener.fail(e);
+                        iOnLoadListener.fail("cuowu");
                     }
 
                     @Override
                     public void onNext(MoviesBean moviesBean) {
+                        if (moviesBean.getStart()<30){
 
-                        iOnLoadListener.successMov(moviesBean);
+                            iOnLoadListener.loadMoreMovSuccess(moviesBean);
+                        }else {
+                            iOnLoadListener.fail("没有更多了");
+
+                        }
+                        if (moviesBean.getStart()==0){
+                            iOnLoadListener.successMov(moviesBean);
+                        }
+
+
                     }
                 });
     }

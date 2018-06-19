@@ -1,5 +1,7 @@
 package cn.edu.gdmec.android.reader.News.Model;
 
+import android.util.Log;
+
 import cn.edu.gdmec.android.reader.Api;
 import cn.edu.gdmec.android.reader.Bean.NewsBean;
 import cn.edu.gdmec.android.reader.Http.RetrofitHelper;
@@ -18,6 +20,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class NewsModel implements INewsModel {
+    private String TAG="NewsModel";
     @Override
     public void loadNews(final String hostType,final int startPage,final String id, final IOnLoadListener iOnLoadListener) {
         RetrofitHelper retrofitHelper = new RetrofitHelper(Api.NEWS_HOST);
@@ -32,13 +35,20 @@ public class NewsModel implements INewsModel {
 
                    @Override
                    public void onError(Throwable e) {
-                     iOnLoadListener.fail(e);
+                     iOnLoadListener.fail(e.getMessage());
                    }
 
                    @Override
                    public void onNext(NewsBean newsBean) {
+                       if (startPage != 0){
+                           iOnLoadListener.loadMoreNewsSuccess(newsBean);
+                           Log.i(TAG, "onNext: loadMoreNewsSuccess");
+                       }else {
+                           iOnLoadListener.success(newsBean);
+                           Log.i(TAG, "onNext: ");
+                       }
 
-                       iOnLoadListener.success(newsBean);
+
                    }
                });
     }

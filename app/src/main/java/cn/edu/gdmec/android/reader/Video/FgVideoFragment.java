@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import cn.edu.gdmec.android.reader.Bean.TodayContentBean;
+import cn.edu.gdmec.android.reader.Bean.VideoUrlBean;
 import cn.edu.gdmec.android.reader.R;
 import cn.edu.gdmec.android.reader.Video.Presenter.IVideoPresenter;
 import cn.edu.gdmec.android.reader.Video.Presenter.VideoPresenter;
@@ -25,7 +27,13 @@ public class FgVideoFragment extends Fragment implements IVideoView {
     private RecyclerView rv_video;
     private ItemVideoAdapter itemVideoAdapter;
     private SwipeRefreshLayout srl_video;
+    private LinearLayoutManager layoutManager;
+    private int startPage = 0;
 
+    private void loadMore(){
+        startPage += 20;
+        iVideoPresenter.loadVideo(false);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,14 +48,24 @@ public class FgVideoFragment extends Fragment implements IVideoView {
         rv_video = view.findViewById(R.id.rv_video);
         srl_video = view.findViewById(R.id.srl_video);
         srl_video.setColorSchemeColors(Color.parseColor("#ffce3d3a"));
-        iVideoPresenter.loadVideo();
+        iVideoPresenter.loadVideo(true);
         srl_video.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                iVideoPresenter.loadVideo();
+                iVideoPresenter.loadVideo(true);
             }
         });
         itemVideoAdapter = new ItemVideoAdapter(getActivity());
+        rv_video.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE &&
+                        (layoutManager.findLastVisibleItemPosition() + 1) == layoutManager.getItemCount()){
+                    loadMore();
+                    Log.i("FgNewsListFragment", "onScrollStateChanged: jj");
+                }
+            }
+        });
 
     }
 
@@ -55,8 +73,10 @@ public class FgVideoFragment extends Fragment implements IVideoView {
     public void showVideo(List<TodayContentBean> todayContentBeans, List<String> videoList) {
 
         itemVideoAdapter.setData(todayContentBeans,videoList);
-        rv_video.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        rv_video.setLayoutManager(layoutManager);
         rv_video.setAdapter(itemVideoAdapter);
+
 
     }
 
@@ -73,8 +93,17 @@ public class FgVideoFragment extends Fragment implements IVideoView {
     }
 
     @Override
-    public void showErrorMsg(Throwable throwable) {
+    public void showErrorMsg(String ss) {
+        itemVideoAdapter.notifyItemRemoved(itemVideoAdapter.getItemCount());
 
-        Toast.makeText(getContext(),"加载出错："+throwable.getMessage(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"加载出错："+ss,Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void showMoreVideos(List<TodayContentBean> todayContentBeans, List<String> videoList) {
+        itemVideoAdapter.addData(todayContentBeans,videoList);
+        itemVideoAdapter.notifyDataSetChanged();
+    }
+
+
 }

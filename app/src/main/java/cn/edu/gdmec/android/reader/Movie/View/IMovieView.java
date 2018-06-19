@@ -8,7 +8,9 @@ import cn.edu.gdmec.android.reader.Bean.MoviesBean;
 
 public interface IMovieView {
     void showViews(MoviesBean moviesBean);
+    void showMoreMovies(MoviesBean moviesBean);
+
     void hideDialog();
     void showDialog();
-    void showErrorMsg(Throwable throwable);
+    void showErrorMsg(String ss);
 }

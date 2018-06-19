@@ -1,6 +1,7 @@
 package cn.edu.gdmec.android.reader.Video.Presenter;
 
 import android.util.Base64;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -32,13 +33,17 @@ public class VideoPresenter implements IVideoPresenter, IVideoLoadListener{
         }
 
         @Override
-        public void loadVideo() {
-            iVideoView.showDialog();
-            iVideoModel.loadVideo("video", this);
+        public void loadVideo(boolean flag) {
+            if (flag == true){
+                iVideoView.showDialog();
+            }
+
+
+            iVideoModel.loadVideo("video",flag, this);
         }
 
         @Override
-        public void videoUrlSuccess(List<VideoUrlBean> mainUrlBeans, List<TodayContentBean> contentBeans) {
+        public void videoUrlSuccess(List<VideoUrlBean> mainUrlBeans,boolean flag, List<TodayContentBean> contentBeans) {
             List<String> videoList = new ArrayList<>();
             iVideoView.hideDialog();
             for (int i = 0; i < mainUrlBeans.size(); i++) {
@@ -46,13 +51,21 @@ public class VideoPresenter implements IVideoPresenter, IVideoLoadListener{
                 final String url1 = (new String(Base64.decode(mainUrl.getBytes(), Base64.DEFAULT)));
                 videoList.add(url1);
             }
-            iVideoView.showVideo(contentBeans, videoList);
+            if (flag){
+                iVideoView.showVideo(contentBeans, videoList);
+            }else {
+                iVideoView.showMoreVideos(contentBeans,videoList);
+            }
+
         }
 
-        @Override
-        public void fail(Throwable throwable) {
+
+
+
+    @Override
+        public void fail(String ss) {
             iVideoView.hideDialog();
-            iVideoView.showErrorMsg(throwable);
+            iVideoView.showErrorMsg(ss);
         }
 
         public static String getVideoContentApi(String videoid) {

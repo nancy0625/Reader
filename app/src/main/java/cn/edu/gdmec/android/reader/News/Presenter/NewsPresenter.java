@@ -23,7 +23,9 @@ public class NewsPresenter implements INewsPresenter,IOnLoadListener {
     }
     @Override
     public void loadNews(int type, int startPage) {
-      iNewsView.showDialog();
+    if (startPage == 0){
+        iNewsView.showDialog();
+    }
       switch (type){
           case FgNewsFragment.NEWS_TYPE_TOP:
               iNewsModel.loadNews("headline",startPage, Api.HEADLINE_ID,this);
@@ -52,9 +54,20 @@ public class NewsPresenter implements INewsPresenter,IOnLoadListener {
     }
 
     @Override
-    public void fail(Throwable throwable) {
+    public void loadMoreMovSuccess(MoviesBean moviesBean) {
+
+    }
+
+    @Override
+    public void fail(String ss) {
         iNewsView.hideDialog();
-        iNewsView.showErrorMsg(throwable);
+        iNewsView.showErrorMsg(ss);
+    }
+
+    @Override
+    public void loadMoreNewsSuccess(NewsBean newsBean) {
+        iNewsView.hideDialog();
+        iNewsView.showMoreNews(newsBean);
     }
 
 

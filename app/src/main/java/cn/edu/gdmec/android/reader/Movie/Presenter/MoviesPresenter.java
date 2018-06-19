@@ -13,19 +13,22 @@ import cn.edu.gdmec.android.reader.Movie.View.IMovieView;
  */
 
 public class MoviesPresenter implements IMoviePresenter,IOnLoadListener {
-    private IMovieModel iMovieModel,iMovieModel2;
+    private IMovieModel iMovieModel;
     private IMovieView iMovieView;
     public MoviesPresenter(IMovieView iMovieView){
         this.iMovieView = iMovieView;
         this.iMovieModel = new MovieModel();
-        this.iMovieModel2 = new MovieModel();
+
     }
 
 
     @Override
-    public void loadMovies(String type) {
-        iMovieView.showDialog();
-        iMovieModel.loadMovies("headline",type,this);
+    public void loadMovies(String type,int start) {
+        if (start == 0){
+            iMovieView.showDialog();
+        }
+
+        iMovieModel.loadMovies("headline",type,start,this);
 
 
     }
@@ -47,12 +50,23 @@ public class MoviesPresenter implements IMoviePresenter,IOnLoadListener {
 
     }
 
+    @Override
+    public void loadMoreMovSuccess(MoviesBean moviesBean) {
+
+        iMovieView.hideDialog();
+        iMovieView.showMoreMovies(moviesBean);
+    }
 
 
     @Override
-    public void fail(Throwable throwable) {
+    public void fail(String ss) {
 
         iMovieView.hideDialog();
-        iMovieView.showErrorMsg(throwable);
+        iMovieView.showErrorMsg("ddd");
+    }
+
+    @Override
+    public void loadMoreNewsSuccess(NewsBean newsBean) {
+
     }
 }

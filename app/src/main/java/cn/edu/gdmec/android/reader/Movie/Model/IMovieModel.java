@@ -7,6 +7,6 @@ import cn.edu.gdmec.android.reader.IOnLoadListener;
  */
 
 public interface IMovieModel {
-    void loadMovies(String hostType,String type, IOnLoadListener iOnLoadListener);
+    void loadMovies(String hostType,String type,int start, IOnLoadListener iOnLoadListener);
 
 }

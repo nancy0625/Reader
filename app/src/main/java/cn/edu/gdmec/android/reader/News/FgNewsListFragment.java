@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import cn.edu.gdmec.android.reader.News.View.INewsView;
 import cn.edu.gdmec.android.reader.R;
 
 public class FgNewsListFragment extends Fragment  implements INewsView {
-
+    private  static final String TAG= "FgNewsListFragment";
     private TextView tvNews;
     private int type;
     private NewsPresenter presenter;
@@ -29,6 +30,8 @@ public class FgNewsListFragment extends Fragment  implements INewsView {
     private List<NewsBean.Bean> newsBeanList;
     private TextView tv_news_list;
     private RecyclerView rv_news;
+    private LinearLayoutManager layoutManager;
+    private int startPage = 0;
 
     public static FgNewsListFragment newInstance(int type){
         Bundle args = new Bundle();
@@ -43,6 +46,10 @@ public class FgNewsListFragment extends Fragment  implements INewsView {
        return inflater.inflate(R.layout.fg_news_list,null);
     }
 
+    private void loadMore(){
+        startPage += 20;
+        presenter.loadNews(type,startPage);
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -62,35 +69,52 @@ public class FgNewsListFragment extends Fragment  implements INewsView {
         });
 
         presenter.loadNews(type,0);
+        rv_news.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE &&
+                        (layoutManager.findLastVisibleItemPosition() + 1) == layoutManager.getItemCount()){
+                    loadMore();
+                    Log.i("FgNewsListFragment", "onScrollStateChanged: jj");
+                }
+            }
+        });
 
     }
 
 
     @Override
     public void showViews(final NewsBean newsBean) {
-        getActivity().runOnUiThread(new TimerTask() {
+       /* getActivity().runOnUiThread(new TimerTask() {
             @Override
-            public void run() {
-                switch (type){
-                    case FgNewsFragment.NEWS_TYPE_TOP:
-                       // tvNews.setText(newsBean.getTop().get(0).getTitle()+" "+ newsBean.getTop().get(0).getMtime());
-                        newsBeanList = newsBean.getTop();
-                        break;
-                    case FgNewsFragment.NEWS_TYPE_NBA:
-                        //tvNews.setText(newsBean.getNBA().get(0).getTitle()+" "+ newsBean.getNBA().get(0).getMtime());
-                        newsBeanList = newsBean.getNBA();
-                        break;
-                    case FgNewsFragment.NEWS_TYPE_JOKES:
-                        //tvNews.setText(newsBean.getJoke().get(0).getTitle()+" "+ newsBean.getJoke().get(0).getMtime());
-                        newsBeanList = newsBean.getJoke();
-                        break;
-                }
-                adapter.setData(newsBeanList);
-                rv_news.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-                rv_news.setAdapter(adapter);
-                tv_news_list.setVisibility(View.GONE);
-            }
-        });
+            public void run() {*/
+
+        switch (type) {
+            case FgNewsFragment.NEWS_TYPE_TOP:
+                // tvNews.setText(newsBean.getTop().get(0).getTitle()+" "+ newsBean.getTop().get(0).getMtime());
+                newsBeanList = newsBean.getTop();
+                break;
+            case FgNewsFragment.NEWS_TYPE_NBA:
+                //tvNews.setText(newsBean.getNBA().get(0).getTitle()+" "+ newsBean.getNBA().get(0).getMtime());
+                newsBeanList = newsBean.getNBA();
+                break;
+            case FgNewsFragment.NEWS_TYPE_JOKES:
+                //tvNews.setText(newsBean.getJoke().get(0).getTitle()+" "+ newsBean.getJoke().get(0).getMtime());
+                newsBeanList = newsBean.getJoke();
+                break;
+        }
+
+        adapter.setData(newsBeanList);
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        rv_news.setLayoutManager(layoutManager);
+        rv_news.setAdapter(adapter);
+        tv_news_list.setVisibility(View.GONE);
+//                adapter.setData(newsBeanList);
+//                rv_news.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+//                rv_news.setAdapter(adapter);
+//                tv_news_list.setVisibility(View.GONE);
+        // }
+    //});
     }
 
     @Override
@@ -106,8 +130,29 @@ public class FgNewsListFragment extends Fragment  implements INewsView {
     }
 
     @Override
-    public void showErrorMsg(Throwable error) {
+    public void showErrorMsg(String ss) {
+        adapter.notifyItemRemoved(adapter.getItemCount());
 
-        tv_news_list.setText("加载失败："+error);
+        tv_news_list.setText("加载失败："+ss);
+    }
+
+    @Override
+    public void showMoreNews(NewsBean newsBean) {
+        Log.i(TAG, "showMoreNews: "+newsBean.toString()+type);
+        switch (type){
+            case FgNewsFragment.NEWS_TYPE_TOP:
+                // tvNews.setText(newsBean.getTop().get(0).getTitle()+" "+ newsBean.getTop().get(0).getMtime());
+               adapter.addData(newsBean.getTop());
+                break;
+            case FgNewsFragment.NEWS_TYPE_NBA:
+                //tvNews.setText(newsBean.getNBA().get(0).getTitle()+" "+ newsBean.getNBA().get(0).getMtime());
+                adapter.addData(newsBean.getNBA());
+                break;
+            case FgNewsFragment.NEWS_TYPE_JOKES:
+                //tvNews.setText(newsBean.getJoke().get(0).getTitle()+" "+ newsBean.getJoke().get(0).getMtime());
+                adapter.addData(newsBean.getJoke());
+                break;
+        }
+        adapter.notifyDataSetChanged();
     }
 }

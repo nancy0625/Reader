@@ -10,6 +10,8 @@ import cn.edu.gdmec.android.reader.Bean.NewsBean;
 public interface IOnLoadListener {
     void success(NewsBean newsBean);
     void successMov(MoviesBean moviesBean);
-    void fail(Throwable throwable);
+    void loadMoreMovSuccess(MoviesBean moviesBean);
+    void fail(String string);
+    void loadMoreNewsSuccess(NewsBean newsBean);
 
 }

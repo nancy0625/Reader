@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
 
 public class VideoModel implements IVideoModel {
     @Override
-    public void loadVideo(String category, final IVideoLoadListener iVideoLoadListener) {
+    public void loadVideo(String category, final boolean flag, final IVideoLoadListener iVideoLoadListener) {
         final List<VideoUrlBean> videoList = new ArrayList<>();
         final List<TodayContentBean> contentBeans = new ArrayList<>();
         final RetrofitHelper retrofitHelper = new RetrofitHelper(Api.TODAY_HOST);
@@ -48,17 +48,18 @@ public class VideoModel implements IVideoModel {
             @Override
             public void onCompleted() {
 
-                iVideoLoadListener.videoUrlSuccess(videoList, contentBeans);
+                iVideoLoadListener.videoUrlSuccess(videoList,flag, contentBeans);
             }
 
             @Override
             public void onError(Throwable e) {
 
-                iVideoLoadListener.fail(e);
+                iVideoLoadListener.fail(e.getMessage());
             }
 
             @Override
             public void onNext(VideoUrlBean videoUrlBean) {
+
 
                 videoList.add(videoUrlBean);
             }
