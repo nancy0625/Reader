@@ -1,5 +1,7 @@
 package cn.edu.gdmec.android.reader.Movie.Presenter;
 
+import java.util.List;
+
 import cn.edu.gdmec.android.reader.Api;
 import cn.edu.gdmec.android.reader.Bean.MoviesBean;
 import cn.edu.gdmec.android.reader.Bean.NewsBean;
@@ -51,10 +53,10 @@ public class MoviesPresenter implements IMoviePresenter,IOnLoadListener {
     }
 
     @Override
-    public void loadMoreMovSuccess(MoviesBean moviesBean) {
+    public void loadMoreMovSuccess(List<MoviesBean.SubjectsBean> objects) {
 
         iMovieView.hideDialog();
-        iMovieView.showMoreMovies(moviesBean);
+        iMovieView.showMoreMovies(objects);
     }
 
 

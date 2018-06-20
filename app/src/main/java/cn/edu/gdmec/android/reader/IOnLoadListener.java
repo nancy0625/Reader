@@ -1,5 +1,7 @@
 package cn.edu.gdmec.android.reader;
 
+import java.util.List;
+
 import cn.edu.gdmec.android.reader.Bean.MoviesBean;
 import cn.edu.gdmec.android.reader.Bean.NewsBean;
 
@@ -10,7 +12,7 @@ import cn.edu.gdmec.android.reader.Bean.NewsBean;
 public interface IOnLoadListener {
     void success(NewsBean newsBean);
     void successMov(MoviesBean moviesBean);
-    void loadMoreMovSuccess(MoviesBean moviesBean);
+    void loadMoreMovSuccess(List<MoviesBean.SubjectsBean> objects);
     void fail(String string);
     void loadMoreNewsSuccess(NewsBean newsBean);
 

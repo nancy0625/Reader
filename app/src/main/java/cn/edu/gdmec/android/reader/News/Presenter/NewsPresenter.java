@@ -1,5 +1,7 @@
 package cn.edu.gdmec.android.reader.News.Presenter;
 
+import java.util.List;
+
 import cn.edu.gdmec.android.reader.Api;
 import cn.edu.gdmec.android.reader.Bean.MoviesBean;
 import cn.edu.gdmec.android.reader.Bean.NewsBean;
@@ -54,7 +56,7 @@ public class NewsPresenter implements INewsPresenter,IOnLoadListener {
     }
 
     @Override
-    public void loadMoreMovSuccess(MoviesBean moviesBean) {
+    public void loadMoreMovSuccess(List<MoviesBean.SubjectsBean> objects) {
 
     }
 

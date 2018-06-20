@@ -38,16 +38,16 @@ public class MovieModel implements IMovieModel {
 
                     @Override
                     public void onNext(MoviesBean moviesBean) {
-                        if (moviesBean.getStart()<30){
+                        if (moviesBean.getStart() != 0){
 
-                            iOnLoadListener.loadMoreMovSuccess(moviesBean);
-                        }else {
+                            iOnLoadListener.loadMoreMovSuccess(moviesBean.getSubjects());
+                        }else if(moviesBean.getStart()>30){
                             iOnLoadListener.fail("没有更多了");
 
-                        }
-                        if (moviesBean.getStart()==0){
+                        }else {
                             iOnLoadListener.successMov(moviesBean);
                         }
+
 
 
                     }

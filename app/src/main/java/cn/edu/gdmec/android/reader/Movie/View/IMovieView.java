@@ -1,5 +1,7 @@
 package cn.edu.gdmec.android.reader.Movie.View;
 
+import java.util.List;
+
 import cn.edu.gdmec.android.reader.Bean.MoviesBean;
 
 /**
@@ -8,7 +10,7 @@ import cn.edu.gdmec.android.reader.Bean.MoviesBean;
 
 public interface IMovieView {
     void showViews(MoviesBean moviesBean);
-    void showMoreMovies(MoviesBean moviesBean);
+    void showMoreMovies(List<MoviesBean.SubjectsBean> objects);
 
     void hideDialog();
     void showDialog();

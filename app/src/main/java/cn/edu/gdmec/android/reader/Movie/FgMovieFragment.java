@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 
+import java.util.List;
+
 import cn.edu.gdmec.android.reader.Api;
 import cn.edu.gdmec.android.reader.Bean.MoviesBean;
 import cn.edu.gdmec.android.reader.Movie.Presenter.MoviesPresenter;
@@ -71,11 +73,6 @@ public class FgMovieFragment extends Fragment implements IMovieView {
     }
     private void loadMore(){
         start += 10;
-
-        if (start>30){
-            Toast.makeText(getActivity(),"没有更多了",Toast.LENGTH_SHORT).show();
-            start = 0;
-        }
         moviesPresenter.loadMovies(Api.MOVIE_ID,start);
     }
 
@@ -98,7 +95,9 @@ public class FgMovieFragment extends Fragment implements IMovieView {
     }
 
     @Override
-    public void showMoreMovies(MoviesBean moviesBean) {
+    public void showMoreMovies(List<MoviesBean.SubjectsBean> objects) {
+        movieOnAdapter.addData(objects);
+        movieOnAdapter.notifyDataSetChanged();
 
     }
 
